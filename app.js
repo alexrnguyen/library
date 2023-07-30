@@ -15,19 +15,40 @@ function triggerModal() {
 
     const overlay = document.querySelector('.overlay');
     overlay.classList.remove('hidden');
+
+    console.log('Modal');
+    const addBookForm = document.querySelector('#add-book-form');
+    addBookForm.onsubmit = (event) => {
+        console.log('Submitted');
+        const title = document.querySelector('#title').value;
+        const author = document.querySelector('#author').value;
+        const numPages = document.querySelector('#num-pages').value;
+        const isRead = document.querySelector('#read').checked;
+        const bookToAdd = new Book(title, author, numPages, isRead);
+        addBookToLibrary(bookToAdd);
+
+        addBookForm.reset();
+        modal.classList.add('hidden');
+        overlay.classList.add('hidden');
+
+        event.preventDefault();
+    };
 }
 
-function addBookToLibrary() {
+function addBookToLibrary(bookToAdd) {
     const bookGrid = document.querySelector('.book-grid');
-
-    // Temporary code
-    const newBook = new Book('Test', 'Alex Nguyen', 0, true);
-    library.push(newBook);
+    console.log(bookToAdd.title);
+    library.push(bookToAdd);
 
     const bookCard = document.createElement('div');
     bookCard.classList.add('book-card');
-    bookCard.textContent(newBook.title); // Testing purposes
+    bookCard.textContent = bookToAdd.title; // Testing purposes
     bookGrid.appendChild(bookCard);
+}
+
+function addBookCardContent(bookCard) {
+    const titleText = document.createElement('div');
+    const authorText = document.createElement('div');
 }
 
 const addButton = document.querySelector('.add-button');

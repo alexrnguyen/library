@@ -32,10 +32,18 @@ header {
     width: 2rem;
     height: 2rem;
 }
+
 /* || Main Content */
 
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
 .book-card {
-    
+    min-height: 10rem;
+    background-color: lightgray;
 }
 
 
@@ -51,8 +59,10 @@ header {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
+    border-radius: 10px;
     padding: 1rem;
     width: 450px;
+    height: 75%;
     z-index: 2;
 }
 
