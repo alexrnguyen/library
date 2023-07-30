@@ -1,0 +1,35 @@
+/* || General Styles */
+
+
+/* || Header */
+h1 {
+    margin: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    gap: 1rem;
+}
+
+.logo, .add-button {
+    margin: 1rem;
+}
+
+
+.add-button {
+    background-color: green;
+    color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.plus {
+    width: 2rem;
+    height: 2rem;
+}
+/* || Main Content */
