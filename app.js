@@ -18,8 +18,6 @@ Book.prototype.changeReadStatus = function() {
  * 
  */
 function triggerModal() {
-    const modal = document.querySelector('.modal');
-    const overlay = document.querySelector('.overlay');
     toggleModal();
 
     const addBookForm = document.querySelector('#add-book-form');
@@ -41,8 +39,6 @@ function triggerModal() {
  * 
  */
 function toggleModal() {
-    const modal = document.querySelector('.modal');
-    const overlay = document.querySelector('.overlay');
     modal.classList.toggle('hidden');
     overlay.classList.toggle('hidden');
 }
@@ -53,9 +49,7 @@ function toggleModal() {
  * @param {*} bookToAdd 
  */
 function addBookToLibrary(bookToAdd) {
-    // Add book to grid (library)
-    const bookGrid = document.querySelector('.book-grid');
-    console.log(bookToAdd.title);
+    // Add book to library
     library.push(bookToAdd);
 
     // Create new book card
@@ -71,14 +65,11 @@ function addBookToLibrary(bookToAdd) {
 
     // Update stats
     if (bookToAdd.isRead) {
-        const totalRead = document.getElementById('total-read');
         totalRead.textContent++;
     }
     else {
-        const totalNotRead = document.getElementById('total-not-read');
         totalNotRead.textContent++;
     }
-    const totalBooks = document.getElementById('total-books');
     totalBooks.textContent++;
 }
 
@@ -111,8 +102,6 @@ function addBookCardContent(bookCard, book) {
     isReadStatus.addEventListener('click', () => {
         book.changeReadStatus();
         updateBookCard(bookCard, book);
-        const totalRead = document.getElementById('total-read');
-        const totalNotRead = document.getElementById('total-not-read');
 
         if (book.isRead) {
             totalRead.textContent++;
@@ -149,26 +138,31 @@ function updateBookCard(bookCard, book) {
  */
 function deleteBook(bookCard, book) {
     // Remove book from array and grid
-    const bookGrid = document.querySelector('.book-grid');
     const index = bookCard.dataset.index;
     library.splice(index, 1);
     bookGrid.removeChild(bookCard);
 
     // Update stats
-    const totalBooks = document.getElementById('total-books');
     if (book.isRead) {
-        const totalRead = document.getElementById('total-read');
         totalRead.textContent--;
     }
     else {
-        const totalNotRead = document.getElementById('total-not-read');
         totalNotRead.textContent--;
     }
     totalBooks.textContent--;
 }
 
 let library = [];
+
+// HTML Elements
 const addButton = document.querySelector('.add-button');
+const bookGrid = document.querySelector('.book-grid');
+const totalBooks = document.getElementById('total-books');
+const totalRead = document.getElementById('total-read');
+const totalNotRead = document.getElementById('total-not-read');
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+
 addButton.addEventListener('click', triggerModal);
 
 // Disable confirm form resubmission dialog
