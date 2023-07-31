@@ -1,5 +1,5 @@
 /**
- * 
+ * A representation of a book in the library
  */
 class Book {
     constructor(title, author, numPages, isRead) {
@@ -15,7 +15,7 @@ Book.prototype.changeReadStatus = function() {
 }
 
 /**
- * 
+ * Display a modal that prompts the user to enter information about a book
  */
 function triggerModal() {
     toggleModal();
@@ -36,7 +36,7 @@ function triggerModal() {
 }
 
 /**
- * 
+ * Hide the modal if it is currently visible or show the modal if it is hidden
  */
 function toggleModal() {
     modal.classList.toggle('hidden');
@@ -45,8 +45,8 @@ function toggleModal() {
 
 
 /**
- * 
- * @param {*} bookToAdd 
+ * Add a book to the library and create a book card for the given book
+ * @param {*} bookToAdd Book to add to the library
  */
 function addBookToLibrary(bookToAdd) {
     // Add book to library
@@ -75,9 +75,9 @@ function addBookToLibrary(bookToAdd) {
 
 
 /**
- * 
- * @param {*} bookCard 
- * @param {*} book 
+ * Add title, author, number of pages, and status to a book card. Each book card also has a delete button
+ * @param {*} bookCard Book card to add content to
+ * @param {*} book The corresponding book object of the book card
  */
 function addBookCardContent(bookCard, book) {
     const titleText = document.createElement('div');
@@ -99,6 +99,7 @@ function addBookCardContent(bookCard, book) {
 
     updateBookCard(bookCard, book);
 
+    // Event listeners
     isReadStatus.addEventListener('click', () => {
         book.changeReadStatus();
         updateBookCard(bookCard, book);
@@ -132,9 +133,9 @@ function updateBookCard(bookCard, book) {
 }
 
 /**
- * 
- * @param {*} bookCard 
- * @param {*} book 
+ * Removes a book from the library
+ * @param {*} bookCard Card to remove from grid
+ * @param {*} book Book to remove from array
  */
 function deleteBook(bookCard, book) {
     // Remove book from array and grid
