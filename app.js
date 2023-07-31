@@ -24,10 +24,10 @@ function triggerModal() {
 
     const addBookForm = document.querySelector('#add-book-form');
     addBookForm.onsubmit = (event) => {
-        const title = document.querySelector('#title').value;
-        const author = document.querySelector('#author').value;
-        const numPages = document.querySelector('#num-pages').value;
-        const isRead = document.querySelector('#read').checked;
+        const title = document.getElementById('title').value;
+        const author = document.getElementById('author').value;
+        const numPages = document.getElementById('num-pages').value;
+        const isRead = document.getElementById('read').checked;
         const bookToAdd = new Book(title, author, numPages, isRead);
         addBookToLibrary(bookToAdd);
 
@@ -61,19 +61,24 @@ function addBookToLibrary(bookToAdd) {
     // Create new book card
     const bookCard = document.createElement('div');
     bookCard.classList.add('book-card');
+
+    // Add index of book as a data attribute of a book card
+    bookCard.dataset.index = library.indexOf(bookToAdd);
+
+
     addBookCardContent(bookCard, bookToAdd);
     bookGrid.appendChild(bookCard);
 
     // Update stats
     if (bookToAdd.isRead) {
-        const totalRead = document.querySelector('#total-read');
+        const totalRead = document.getElementById('total-read');
         totalRead.textContent++;
     }
     else {
-        const totalNotRead = document.querySelector('#total-not-read');
+        const totalNotRead = document.getElementById('total-not-read');
         totalNotRead.textContent++;
     }
-    const totalBooks = document.querySelector('#total-books');
+    const totalBooks = document.getElementById('total-books');
     totalBooks.textContent++;
 }
 
@@ -88,12 +93,15 @@ function addBookCardContent(bookCard, book) {
     const authorText = document.createElement('div');
     const numPagesText = document.createElement('div');
     const isReadStatus = document.createElement('button');
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete-button');
+    deleteButton.textContent = 'Delete';
 
     titleText.textContent = `Title: ${book.title}`;
     authorText.textContent = `Author: ${book.author}`;
     numPagesText.textContent = `Number of Pages: ${book.numPages}`;
 
-    const cardElements = [titleText, authorText, numPagesText, isReadStatus];
+    const cardElements = [deleteButton, titleText, authorText, numPagesText, isReadStatus];
     for(element of cardElements) {
         bookCard.appendChild(element);
     }
@@ -103,8 +111,8 @@ function addBookCardContent(bookCard, book) {
     isReadStatus.addEventListener('click', () => {
         book.changeReadStatus();
         updateBookCard(bookCard, book);
-        const totalRead = document.querySelector('#total-read');
-        const totalNotRead = document.querySelector('#total-not-read');
+        const totalRead = document.getElementById('total-read');
+        const totalNotRead = document.getElementById('total-not-read');
 
         if (book.isRead) {
             totalRead.textContent++;
@@ -115,6 +123,8 @@ function addBookCardContent(bookCard, book) {
             totalRead.textContent--;
         }
     });
+
+    deleteButton.addEventListener('click', () => deleteBook(bookCard, book));
 }
 
 function updateBookCard(bookCard, book) {
@@ -132,11 +142,36 @@ function updateBookCard(bookCard, book) {
     }
 }
 
+/**
+ * 
+ * @param {*} bookCard 
+ * @param {*} book 
+ */
+function deleteBook(bookCard, book) {
+    // Remove book from array and grid
+    const bookGrid = document.querySelector('.book-grid');
+    const index = bookCard.dataset.index;
+    library.splice(index, 1);
+    bookGrid.removeChild(bookCard);
+
+    // Update stats
+    const totalBooks = document.getElementById('total-books');
+    if (book.isRead) {
+        const totalRead = document.getElementById('total-read');
+        totalRead.textContent--;
+    }
+    else {
+        const totalNotRead = document.getElementById('total-not-read');
+        totalNotRead.textContent--;
+    }
+    totalBooks.textContent--;
+}
+
 let library = [];
 const addButton = document.querySelector('.add-button');
 addButton.addEventListener('click', triggerModal);
 
 // Disable confirm form resubmission dialog
 if (window.history.replaceState) {
-    window.history.replaceState( null, null, window.location.href );
+    window.history.replaceState(null, null, window.location.href);
 }
