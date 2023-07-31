@@ -19,15 +19,11 @@ Book.prototype.changeReadStatus = function() {
  */
 function triggerModal() {
     const modal = document.querySelector('.modal');
-    modal.classList.remove('hidden');
-
     const overlay = document.querySelector('.overlay');
-    overlay.classList.remove('hidden');
+    toggleModal();
 
-    console.log('Modal');
     const addBookForm = document.querySelector('#add-book-form');
     addBookForm.onsubmit = (event) => {
-        console.log('Submitted');
         const title = document.querySelector('#title').value;
         const author = document.querySelector('#author').value;
         const numPages = document.querySelector('#num-pages').value;
@@ -36,11 +32,19 @@ function triggerModal() {
         addBookToLibrary(bookToAdd);
 
         addBookForm.reset();
-        modal.classList.add('hidden');
-        overlay.classList.add('hidden');
-
+        toggleModal();
         event.preventDefault();
     };
+}
+
+/**
+ * 
+ */
+function toggleModal() {
+    const modal = document.querySelector('.modal');
+    const overlay = document.querySelector('.overlay');
+    modal.classList.toggle('hidden');
+    overlay.classList.toggle('hidden');
 }
 
 
@@ -49,14 +53,28 @@ function triggerModal() {
  * @param {*} bookToAdd 
  */
 function addBookToLibrary(bookToAdd) {
+    // Add book to grid (library)
     const bookGrid = document.querySelector('.book-grid');
     console.log(bookToAdd.title);
     library.push(bookToAdd);
 
+    // Create new book card
     const bookCard = document.createElement('div');
     bookCard.classList.add('book-card');
     addBookCardContent(bookCard, bookToAdd);
     bookGrid.appendChild(bookCard);
+
+    // Update stats
+    if (bookToAdd.isRead) {
+        const totalRead = document.querySelector('#total-read');
+        totalRead.textContent++;
+    }
+    else {
+        const totalNotRead = document.querySelector('#total-not-read');
+        totalNotRead.textContent++;
+    }
+    const totalBooks = document.querySelector('#total-books');
+    totalBooks.textContent++;
 }
 
 
@@ -74,30 +92,34 @@ function addBookCardContent(bookCard, book) {
     titleText.textContent = `Title: ${book.title}`;
     authorText.textContent = `Author: ${book.author}`;
     numPagesText.textContent = `Number of Pages: ${book.numPages}`;
-    if (book.isRead) {
-        isReadStatus.classList.remove('book-not-read');
-        isReadStatus.classList.add('book-read');
-        isReadStatus.textContent = 'Read';
-    } 
-    else {
-        isReadStatus.classList.remove('book-read');
-        isReadStatus.classList.add('book-not-read');
-        isReadStatus.textContent = 'Not Read';
-    }
-
-    isReadStatus.addEventListener('click', () => {
-        book.changeReadStatus();
-        updateBookCard(bookCard, book);
-    });
 
     const cardElements = [titleText, authorText, numPagesText, isReadStatus];
     for(element of cardElements) {
         bookCard.appendChild(element);
     }
+
+    updateBookCard(bookCard, book);
+
+    isReadStatus.addEventListener('click', () => {
+        book.changeReadStatus();
+        updateBookCard(bookCard, book);
+        const totalRead = document.querySelector('#total-read');
+        const totalNotRead = document.querySelector('#total-not-read');
+
+        if (book.isRead) {
+            totalRead.textContent++;
+            totalNotRead.textContent--;
+        }
+        else {
+            totalNotRead.textContent++;
+            totalRead.textContent--;
+        }
+    });
 }
 
 function updateBookCard(bookCard, book) {
     const isReadStatus = bookCard.lastChild;
+
     if (book.isRead) {
         isReadStatus.classList.remove('book-not-read');
         isReadStatus.classList.add('book-read');

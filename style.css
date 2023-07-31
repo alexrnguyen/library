@@ -1,5 +1,9 @@
-/* || General Styles */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap');
 
+/* || General Styles */
+body {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
 
 /* || Header */
 h1 {
@@ -8,11 +12,14 @@ h1 {
 
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
+    background-color: lightgray;
 }
 
 .logo {
     display: flex;
+    align-items: center;
     gap: 1rem;
 }
 
@@ -20,6 +27,13 @@ header {
     margin: 1rem;
 }
 
+.stats {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex: 1;
+    flex-wrap: wrap;
+}
 
 .add-button {
     background-color: green;
@@ -33,18 +47,19 @@ header {
     height: 2rem;
 }
 
-/* || Main Content */
+/* || Book Grid */
 
 .book-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
+    margin: 2rem;
 }
 
 /* || Book Card */
 
 .book-card {
-    min-height: 10rem;
+    min-height: 12rem;
     background-color: lightgray;
 }
 
