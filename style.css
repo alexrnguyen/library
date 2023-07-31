@@ -41,9 +41,24 @@ header {
     gap: 2rem;
 }
 
+/* || Book Card */
+
 .book-card {
     min-height: 10rem;
     background-color: lightgray;
+}
+
+.book-read, .book-not-read {
+    padding: 1rem;
+}
+
+.book-read {
+    background-color: green;
+
+}
+
+.book-not-read {
+    background-color: red;
 }
 
 
