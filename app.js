@@ -20,7 +20,6 @@ Book.prototype.changeReadStatus = function() {
 function triggerModal() {
     toggleModal();
 
-    const addBookForm = document.querySelector('#add-book-form');
     addBookForm.onsubmit = (event) => {
         const title = document.getElementById('title').value;
         const author = document.getElementById('author').value;
@@ -86,9 +85,9 @@ function addBookCardContent(bookCard, book) {
     const isReadStatus = document.createElement('button');
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('delete-button');
-    deleteButton.textContent = 'Delete';
+    deleteButton.textContent = 'X';
 
-    titleText.textContent = `Title: ${book.title}`;
+    titleText.textContent = book.title;
     authorText.textContent = `Author: ${book.author}`;
     numPagesText.textContent = `Number of Pages: ${book.numPages}`;
 
@@ -161,10 +160,23 @@ const bookGrid = document.querySelector('.book-grid');
 const totalBooks = document.getElementById('total-books');
 const totalRead = document.getElementById('total-read');
 const totalNotRead = document.getElementById('total-not-read');
+const addBookForm = document.getElementById('add-book-form');
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
+const closeButton = document.querySelector('.close-button');
 
+
+// Event listeners
 addButton.addEventListener('click', triggerModal);
+
+closeButton.addEventListener('click', () => {
+    // Reset input element values
+    document.getElementById('title').value = '';
+    document.getElementById('author').value = '';
+    document.getElementById('num-pages').value = '';
+    document.getElementById('read').checked = false;
+    toggleModal();
+});
 
 // Disable confirm form resubmission dialog
 if (window.history.replaceState) {

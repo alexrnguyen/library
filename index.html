@@ -22,9 +22,12 @@
         <button class="add-button"><img class="plus" src="./assets/plus.svg" alt="+"></button>
     </header>
     <div class="book-grid">
-        
     </div>
     <div class="modal hidden">
+        <div class="modal-header">
+            <h1>Add a Book</h1>
+            <button class="close-button"><img class="close" src="./assets/plus.svg" alt="x"></button>
+        </div>
         <form action="/" method="post" id="add-book-form">
             <div>
                 <label for="title">Title<span class="required">*</span></label>
@@ -41,13 +44,11 @@
                 <input type="number" id="num-pages" name="numPages" required>
             </div>
 
-            <div>
-                <label for="read">Read</label>
+            <div class="read-container">
+                <label class="read" for="read">I have read this book</label>
                 <input type="checkbox" id="read" name="isRead">
             </div>
-            <div>
-                <button type="submit" class="add-book-button">Add Book</button>
-            </div>
+            <button type="submit" class="add-book-button">Add Book</button>
         </form>
     </div>
     <div class="overlay hidden"></div>
