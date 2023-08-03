@@ -8,11 +8,12 @@ class Book {
     this.numPages = numPages;
     this.isRead = isRead;
   }
-}
 
-Book.prototype.changeReadStatus = function () {
-  this.isRead = !this.isRead;
-};
+  changeReadStatus() {
+    this.isRead = !this.isRead;
+    console.log(this.isRead);
+  }
+}
 
 /**
  * Display a modal that prompts the user to enter information about a book
