@@ -82,7 +82,15 @@ header {
   font-size: 1.5rem;
 }
 
-.book-card div:nth-child(2) {
+.title-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+}
+
+.title-container div {
+  grid-column: 2;
+  text-align: center;
   font-size: 2rem;
   font-weight: bold;
 }
@@ -104,6 +112,7 @@ header {
 }
 
 .delete-button {
+  grid-column: 3;
   justify-self: end;
   background-color: red;
   color: white;
@@ -126,7 +135,6 @@ header {
   border-radius: 10px;
   padding: 1rem;
   width: 450px;
-  height: 75%;
   z-index: 2;
   display: flex;
   flex-direction: column;

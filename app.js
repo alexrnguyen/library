@@ -76,6 +76,8 @@ function addBookToLibrary(bookToAdd) {
  * @param {*} book The corresponding book object of the book card
  */
 function addBookCardContent(bookCard, book) {
+  const titleContainer = document.createElement("div");
+  titleContainer.classList.add("title-container");
   const titleText = document.createElement("div");
   const authorText = document.createElement("div");
   const numPagesText = document.createElement("div");
@@ -88,13 +90,10 @@ function addBookCardContent(bookCard, book) {
   authorText.textContent = `Author: ${book.author}`;
   numPagesText.textContent = `${book.numPages} pages`;
 
-  const cardElements = [
-    deleteButton,
-    titleText,
-    authorText,
-    numPagesText,
-    isReadStatus,
-  ];
+  titleContainer.appendChild(titleText);
+  titleContainer.appendChild(deleteButton);
+
+  const cardElements = [titleContainer, authorText, numPagesText, isReadStatus];
   for (element of cardElements) {
     bookCard.appendChild(element);
   }
